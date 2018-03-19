@@ -1,3 +1,5 @@
+
+
 # UI LoRa Protocol
 
 The LoRa communication protocol is being developed with the purpose of having an easy way to communicate bi-directionally between sensor nodes and gateways. The gateway can request the sensor nodes to send sensor measurements but this protocol also allows the nodes to initiate communications to send sensor values without receiving a request from the gateway. The values can be sent with or without a timestamp per measurement. This makes it very easy to do data logging in the node since it can store several readings and timestamps of one sensor and then send all the data in a single message. The protocol also supports bundling several sensors values from different sensors and send a single message with a single timestamp for all the measurements. Additionally, the protocol supports alarms sent from the sensor node that can be handled differently in the gateway to trigger actions or alarm response procedures.
@@ -15,30 +17,29 @@ The protocol supports any number of operations in a single message, limited only
 < operation byte > < data bytes >
 < CRC bytes >
 
-Protocol Identifier – 2 bytes
+**Protocol Identifier – 2 bytes**
  - This is used to identify messages that belong to this protocol.
  - These two bytes can also be used to handle several sensor networks
    using the same gateway as long as they use different identifiers and
    the gateway is prepared to handle them.
 
-
-ID – 1 byte
+**ID – 1 byte**
  - 0 – Broadcast
  - 1 - 200 – Sensor node ID
  - 201 - 255 – Repeater/Gateway ID
-
-The number of bytes in the ID field can easily be extended to support more Nodes and Gateways.
+ - The number of bytes in the ID field can easily be extended to support
+   more Nodes and Gateways.
 	
-Length – 1 byte
+**Length – 1 byte**
  - Number of bytes succeeding the length byte and preceding the CRC bytes. Total number of bytes in the operations and data parameters.
 
-Operation - 1 byte
+**Operation - 1 byte**
  - 256 possible operations 
 
-Sensor Number - 1 byte
+**Sensor Number - 1 byte**
  - 256 possible sensors
 
-CRC – 2 bytes
+**CRC – 2 bytes**
  - Cyclic Redundancy Check (CRC) for error-detecting.
 
 **Operations: Node -&gt; Gateway**
