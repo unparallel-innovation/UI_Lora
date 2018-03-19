@@ -7,21 +7,25 @@ The LoRa communication protocol is being developed with the purpose of having an
 There are also other miscellaneous features that add functionality like sending calibration values to the node, for wireless calibration. The gateway can also read and write variables in the node that can be used for control, status or other features. Read the node’s date and time to check if it is correct and in case the node loses the correct time the gateway can send a command to set the date and time. Additionally, the gateway can activate or deactivate sensors in the node and send a reboot command to restart a node.
 
 The protocol supports any number of operations in a single message, limited only by the maximum LoRa maximum message size. This allows doing more with a smaller number of messages which is very important for saving energy, since wireless communication is one of the more energy intensive tasks. This way several different operations can be grouped in a single LoRa packet reducing by a large factor the number of communications between sensor nodes and Gateway. Each operation has a fixed number of data bytes (fixed length by operation) making it easy to parse several operations in a single message. The complete message can have any size, from a single operation to several operations, being only limited by the LoRa maximum payload.
+<br/>
 
 ## **Protocol Structure**
 
-< Protocol Identifier bytes > < ID > < length byte >
-< operation byte > < data bytes >
-< operation byte > < data bytes >
-…  …
-< operation byte > < data bytes >
+< Protocol Identifier bytes > < ID > < length byte >  
+< operation byte > < data bytes >  
+< operation byte > < data bytes >  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; … &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; …  
+< operation byte > < data bytes >  
 < CRC bytes >
+<br/>
+<br/>
 
 **Protocol Identifier – 2 bytes**
  - This is used to identify messages that belong to this protocol.
  - These two bytes can also be used to handle several sensor networks
    using the same gateway as long as they use different identifiers and
    the gateway is prepared to handle them.
+<br/>
 
 **ID – 1 byte**
  - 0 – Broadcast
@@ -29,18 +33,23 @@ The protocol supports any number of operations in a single message, limited only
  - 201 - 255 – Repeater/Gateway ID
  - The number of bytes in the ID field can easily be extended to support
    more Nodes and Gateways.
-	
+<br/>
+
 **Length – 1 byte**
  - Number of bytes succeeding the length byte and preceding the CRC bytes. Total number of bytes in the operations and data parameters.
+<br/>
 
 **Operation - 1 byte**
- - 256 possible operations 
+ - 256 possible operations
+<br/>
 
 **Sensor Number - 1 byte**
  - 256 possible sensors
+<br/>
 
 **CRC – 2 bytes**
  - Cyclic Redundancy Check (CRC) for error-detecting.
+<br/>
 
 **Operations: Node -&gt; Gateway**
 
@@ -50,7 +59,8 @@ The protocol supports any number of operations in a single message, limited only
 | 0x10 | Send Value | 4 | Float value read |
 | 0x20 | Timestamp | 4 | Date and Time |
 | 0x30 | Send Value with Timestamp | 8 | Float value + Timestamp |
-| 0x40 | Alarm | 8 | Value that triggered the alarm + Timestamp |
+| 0x40 | Alarm | 8 | Value that triggered the alarm + Timestamp |   
+<br/>
 
 **Operations:**  **Gateway -&gt; Node**
 
